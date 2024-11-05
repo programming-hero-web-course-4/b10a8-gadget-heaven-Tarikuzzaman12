@@ -5,24 +5,24 @@ const Categories = ({ categories }) => {
     const { category } = useParams(); 
 
     return (
-        <div className='gap-2 flex-col flex border-2 w-60 items-center h-96 '>
+        <div className='gap-2 rounded-lg flex-col p-6 flex border-2 w-60 items-center h-min '>
             <NavLink
                 to="/"
                 className={({ isActive }) =>
-                    `btn ${!category ? 'bg-blue-500 text-white' : ''}`
+                    `btn ${!category ? 'bg-purple-500 text-white' : ''}`
                 }
             >
-                <button className="">All Products</button>
+                <button className="w-28 rounded-3xl">All Products</button>
             </NavLink>
             {categories.map(category => (
                 <NavLink
                     to={`/category/${category.category}`}
                     key={category.id}
                     className={({ isActive }) =>
-                        `btn ${isActive ? 'bg-blue-500 text-white' : ''}`
+                        `btn ${isActive ? 'bg-purple-500 text-white' : ''}`
                     }
                 >
-                    <button className="">{category.category}</button>
+                    <button className="w-28">{category.category}</button>
                 </NavLink>
             ))}
         </div>

@@ -1,76 +1,62 @@
 import React from 'react';
-import {NavLink } from 'react-router-dom';
+import { Link, useLocation } from 'react-router-dom';
+import bannerImg from '../assets/banner.jpg';
 
 const Navbar = () => {
-    return (
-        <div className="navbar bg-base-100">
-        <div className="navbar-start">
-          <div className="dropdown">
-            <div tabIndex={0} role="button" className="btn btn-ghost lg:hidden">
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                className="h-5 w-5"
-                fill="none"
-                viewBox="0 0 24 24"
-                stroke="currentColor">
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  strokeWidth="2"
-                  d="M4 6h16M4 12h8m-8 6h16" />
-              </svg>
-            </div>
-            <ul
-              tabIndex={0}
-              className="menu menu-sm dropdown-content bg-base-100 rounded-box z-[1] mt-3 w-52 p-2 shadow gap-5">
-                <NavLink
-                to='/'
-                className={({ isActive }) =>
-                    ` ${isActive ? 'text-yellow-500' : ''}`
-                }
-            >
-                Home
-            </NavLink>
-            <NavLink
-                to='/dashboard'
-                className={({ isActive }) =>
-                    `${isActive ? 'text-yellow-500' : ''}`
-                }
-            >
-                Dashboard
-            </NavLink>
-            </ul>
-          </div>
-          <a className="text-[20px] font-bold">Gadget Heaven</a>
-        </div>
-        <div className="navbar-center hidden lg:flex">
-          <ul className="menu menu-horizontal gap-5 px-1">
-          <NavLink
-                to='/'
-                className={({ isActive }) =>
-                    ` ${isActive ? 'text-yellow-500' : ''}`
-                }
-            >
-                Home
-            </NavLink>
-            <NavLink
-                to='/dashboard'
-                className={({ isActive }) =>
-                    `${isActive ? 'text-yellow-500' : ''}`
-                }
-            >
-                Dashboard
-            </NavLink>
+  const location = useLocation();
+
+  // Determine if we are on the home page
+  const isHomePage = location.pathname === '/';
+
+  return (
+    <div className='m-6 '>
+      <nav
+        className={`p-4 text-white ${
+          isHomePage
+            ? 'bg-purple-600 rounded-t-3xl'
+            : ' text-gray-950 rounded-none'
+        }`}
+      >
+        <div className="container mx-auto flex justify-between items-center">
+          <h1 className="text-2xl font-bold">Gadget Heaven</h1>
+          <ul className="flex space-x-4">
+            <Link to="/" className="hover:text-gray-300">Home</Link>
+            <Link to="/Statistics" className="hover:text-gray-300">Statistics</Link>
+            <Link to="/dashboard" className="hover:text-gray-300">Dashboard</Link>
           </ul>
+          <div className="space-x-3 flex">
+            <i className="fa-solid fa-cart-shopping border border-gray-400 rounded-full p-2"></i>
+            <i className="fa-regular fa-heart border border-gray-400 rounded-full p-2"></i>
+          </div>
         </div>
-        <div className="navbar-end">
-        <div className=''>
-        <i class="fa-solid fa-cart-shopping mr-2 bg-white rounded-full "></i>
-        <i class="fa-regular fa-heart"></i>
-        </div>
-        </div>
-      </div>
-    );
+      </nav>
+
+      {/* Conditionally render the hero section only on the home page */}
+      {isHomePage && (
+        <section className="relative bg-purple-600 rounded-b-3xl text-white py-16">
+          <div className="container mx-auto text-center px-4 pb-32">
+            <h2 className="text-4xl font-bold mb-4">
+              Upgrade Your Tech Accessorize with Gadget Heaven Accessories
+            </h2>
+            <p className="text-lg mb-6">
+              Explore the latest gadgets that will take your experience to the next level.
+              <br /> From smart devices to the coolest accessories, we have it all!
+            </p>
+            <button className="bg-white text-purple-600 font-semibold px-6 py-3 rounded-full shadow-md hover:bg-gray-200 transition">
+              Shop Now
+            </button>
+          </div>
+
+          <div className="border-2 border-white p-3 absolute bottom-[-200px] left-1/2 transform -translate-x-1/2 h-5/6 w-3/5 bg-white bg-opacity-50 rounded-3xl overflow-hidden shadow-lg">
+            <img src={bannerImg} alt="VR Headset" className=" rounded-2xl w-full h-full object-cover " />
+          </div>
+        </section>
+      )}
+
+      {/* Spacer for the bottom of the hero section */}
+      {isHomePage && <div className="h-32"></div>}
+    </div>
+  );
 };
 
 export default Navbar;
