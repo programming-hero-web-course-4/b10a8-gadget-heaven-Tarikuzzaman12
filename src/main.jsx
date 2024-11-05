@@ -11,6 +11,7 @@ import Home from './pages/Home';
 import Products from './components/Products';
 import { Outlet } from 'react-router-dom';
 import ProductDetail from './components/ProductDetail';
+import Statictics from './pages/Statictics';
 
 const router = createBrowserRouter([
   {
@@ -44,6 +45,10 @@ const router = createBrowserRouter([
       {
         path: '/dashboard',
         element: <Dashboard />,
+      },
+      {
+        path: '/statictics',
+        element: <Statictics></Statictics>,
       },
     ],
   },

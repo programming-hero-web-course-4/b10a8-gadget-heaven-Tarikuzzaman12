@@ -1,10 +1,12 @@
 import React from 'react';
-import { useLoaderData, useParams } from 'react-router-dom';
+import { useLoaderData, useParams, useOutletContext } from 'react-router-dom';
 import Heading from './Heading';
+import { toast } from 'react-toastify';
 
 const ProductDetail = () => {
     const { id } = useParams();
     const data = useLoaderData();
+    const { updateCartCount, updateWishlistCount } = useOutletContext(); // Update this line
 
     const product = data.find(item => item.product_id === parseInt(id));
 
@@ -12,7 +14,36 @@ const ProductDetail = () => {
         return <p>Product not found.</p>;
     }
 
-    const { product_title, product_image, price, category, rating, description, Specification, availability } = product;
+    const handleAddToCart = () => {
+        const cartItems = JSON.parse(localStorage.getItem('cart')) || [];
+        const isProductInCart = cartItems.some(item => item.product_id === product.product_id);
+
+        if (!isProductInCart) {
+            cartItems.push(product);
+            localStorage.setItem('cart', JSON.stringify(cartItems));
+            updateCartCount(cartItems.length);
+            toast.success("Product added to the cart!");
+        } else {
+            toast.warning("Product already in the cart!");
+        }
+    };
+
+
+    const handleAddToWishlist = () => {
+        const wishlistItems = JSON.parse(localStorage.getItem('wishlist')) || [];
+        if (!wishlistItems.some(item => item.product_id === product.product_id)) {
+            wishlistItems.push(product);
+            localStorage.setItem('wishlist', JSON.stringify(wishlistItems));
+            updateWishlistCount(wishlistItems.length);
+            toast('Product added tio the WishList')
+        }
+        else {
+            toast.warning("Product already in wishlist!")
+        }
+    };
+
+
+    const { product_title, product_image, price, description, Specification, availability, rating } = product;
 
     return (
         <div>
@@ -43,26 +74,24 @@ const ProductDetail = () => {
                             <li key={index}>{spec}</li>
                         ))}
                     </ol>
-                    <p><span className='font-bold'>Ratting : </span>{rating}</p>
+                    <p><span className='font-bold'>Rating: </span>{rating}</p>
                     <div className="rating block">
-                        <input type="radio" name="rating-4" className="mask mask-star-2 bg-[#F9C004]" />
-                        <input type="radio" name="rating-4" className="mask mask-star-2 bg-[#F9C004]" />
-                        <input type="radio" name="rating-4" className="mask mask-star-2 bg-[#F9C004]" />
-                        <input type="radio" name="rating-4" className="mask mask-star-2 bg-[#F9C004]" defaultChecked />
-                        <input type="radio" name="rating-4" className="mask mask-star-2 bg-[#F9C004]" />
+                        {[...Array(5)].map((_, index) => (
+                            <input key={index} type="radio" name="rating" className="mask mask-star-2 bg-[#F9C004]" />
+                        ))}
                     </div>
 
                     <div className='flex items-center gap-4'>
-                        <button className='h-12 w-36 rounded-[32px] bg-purple-500 text-white '>Add To Cards<i className="fa-solid fa-cart-shopping ml-2 "></i>
+                        <button onClick={handleAddToCart} className='h-12 w-36 rounded-[32px] bg-purple-500 text-white'>
+                            Add To Cart <i className="fa-solid fa-cart-shopping ml-2"></i>
                         </button>
-                        <p> <i className="fa-regular fa-heart border border-gray-400 rounded-full p-2"></i></p>
-
+                        <p>
+                            <i onClick={handleAddToWishlist} className="fa-regular fa-heart border border-gray-400 rounded-full p-2 cursor-pointer"></i>
+                        </p>
                     </div>
                 </div>
             </div>
-            <div className='bg-base-200 h-80'>
-
-            </div>
+            <div className='bg-base-200 h-80'></div>
         </div>
     );
 };
