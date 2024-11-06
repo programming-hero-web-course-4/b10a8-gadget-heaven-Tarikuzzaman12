@@ -27,7 +27,7 @@ const ProductDetail = () => {
             updateCartCount(cartItems.length);
             setTimeout(() => {
                 window.location.reload();
-            }, 1700);
+            }, 2000);
         } else {
             toast.warning("Product already in the cart!");
         }

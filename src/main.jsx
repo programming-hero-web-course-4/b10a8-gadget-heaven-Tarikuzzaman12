@@ -15,6 +15,7 @@ import Statictics from './pages/Statictics';
 import AnnouncementBanner from './pages/AnnouncementBanner';
 import { HelmetProvider } from 'react-helmet-async';
 import Error from './components/Error';
+import { ToastContainer } from 'react-toastify';
 
 const router = createBrowserRouter([
   { path: '/',
@@ -67,6 +68,7 @@ const router = createBrowserRouter([
 
 createRoot(document.getElementById('root')).render(
   <StrictMode>
+    <ToastContainer></ToastContainer>
     <HelmetProvider>
       <RouterProvider router={router} />
     </HelmetProvider>
