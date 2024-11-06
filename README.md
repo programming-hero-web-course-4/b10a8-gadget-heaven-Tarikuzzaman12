@@ -1,7 +1,7 @@
 # Gadget Heaven
 
 ## Live Website
-[Link to live website](https://uninterested-kettle222.surge.sh/)
+[Link to live website](https://gad-heaven.surge.sh/)
 
 ## Requirements Document
 [Link to requirements document](https://github.com/ProgrammingHero1/B10-A8-gadget-heaven/blob/main/Batch-10_Assignment-08.pdf)

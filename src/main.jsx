@@ -55,7 +55,7 @@ const router = createBrowserRouter([
         element: <Statictics></Statictics>,
       },
       {
-        path: '/announcementBanner',
+        path: '/aboutUs',
         element: <AnnouncementBanner></AnnouncementBanner>,
       },
       {
