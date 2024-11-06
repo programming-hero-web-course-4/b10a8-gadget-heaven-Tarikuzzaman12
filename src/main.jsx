@@ -14,11 +14,12 @@ import ProductDetail from './components/ProductDetail';
 import Statictics from './pages/Statictics';
 import AnnouncementBanner from './pages/AnnouncementBanner';
 import { HelmetProvider } from 'react-helmet-async';
+import Error from './components/Error';
 
 const router = createBrowserRouter([
-  {
-    path: '/',
+  { path: '/',
     element: <MainLayout />,
+
     children: [
       {
         path: '/',
@@ -55,6 +56,10 @@ const router = createBrowserRouter([
       {
         path: '/announcementBanner',
         element: <AnnouncementBanner></AnnouncementBanner>,
+      },
+      {
+        path: '*',
+        element: <Error></Error>,
       },
     ],
   },

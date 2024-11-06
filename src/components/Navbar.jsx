@@ -113,9 +113,9 @@ const Navbar = ({ cartCount, wishlistCount }) => {
                                 Explore the latest gadgets that will take your experience to the next level.
                                 <br /> From smart devices to the coolest accessories, we have it all!
                             </p>
-                            <button className="bg-white text-purple-600 font-semibold px-6 py-3 rounded-full shadow-md hover:bg-gray-200 transition">
+                            <Link to='/dashboard' className="bg-white text-purple-600 font-semibold px-6 py-3 rounded-full shadow-md hover:bg-gray-200 transition">
                                 Shop Now
-                            </button>
+                            </Link>
                         </div>
                         <div className="border-2 border-white p-3 absolute bottom-[-200px] left-1/2 transform -translate-x-1/2 h-5/6 w-3/5 bg-white bg-opacity-50 rounded-3xl overflow-hidden shadow-lg">
                             <img src={bannerImg} alt="VR Headset" className="rounded-2xl w-full h-full object-cover" />

@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { toast, ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import Heading from '../components/Heading';
-import { useNavigate } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import image from '../assets/Group.png'
 import { Helmet } from 'react-helmet-async';
 const Dashboard = () => {
@@ -15,6 +15,7 @@ const Dashboard = () => {
 
     const navigate = useNavigate();
 
+    
     useEffect(() => {
         const savedCart = JSON.parse(localStorage.getItem('cart')) || [];
         setCartItems(savedCart);
@@ -64,8 +65,7 @@ const Dashboard = () => {
         setCartItems([]);
         setTotalCost(0);
         localStorage.setItem('cart', JSON.stringify([]));
-        navigate('/'); // Navigate to home page
-        window.location.reload();
+        navigate('/'); 
     };
 
     return (
@@ -126,7 +126,7 @@ const Dashboard = () => {
                         </div>
 
                         {cartItems.length === 0 ? (
-                            <p>No items in the cart.</p>
+                            <p className='text-3xl font-semibold text-black text-center'>No items in the cart</p>
                         ) : (
                             <ul>
                                 {cartItems.map((item) => (
@@ -149,7 +149,7 @@ const Dashboard = () => {
                     <div>
                         <h2 className="text-2xl font-bold mb-10">Wishlist</h2>
                         {wishlistItems.length === 0 ? (
-                            <p>No items in the wishlist.</p>
+                            <p className='text-3xl font-semibold text-black text-center'>No items in the wishlist</p>
                         ) : (
                             <ul>
                                 {wishlistItems.map((item) => (
@@ -174,15 +174,16 @@ const Dashboard = () => {
 
             {/* Modal */}
             {showModal && (
-                <div className="fixed inset-0 flex items-center justify-center z-50 bg-gray-900 bg-opacity-50">
-                    <div className="bg-white p-6 rounded-lg shadow-lg w-1/3">
-                    <img  src={image}></img>
-                        <h2 className="text-2xl font-bold mb-4">Congratulations!</h2>
-                        <p>Your purchase was successful.</p>
-                        <button className="btn bg-purple-600 text-white rounded-3xl mt-4" onClick={closeModal}>Close</button>
-                    </div>
-                </div>
-            )}
+    <div className="fixed inset-0 flex items-center justify-center z-50 bg-gray-900 bg-opacity-50">
+        <div className="bg-white p-6 rounded-lg shadow-lg w-full max-w-md text-center flex flex-col items-center">
+            <img src={image} className="mb-4 w-24 h-24 object-cover rounded-full" alt="Celebration"/>
+            <h2 className="text-2xl font-bold mb-4">Congratulations!</h2>
+            <p className="mb-4">Your purchase was successful.</p>
+            <button className="btn bg-purple-600 text-white rounded-3xl px-6 py-2 mt-4" onClick={closeModal}>Close</button>
+        </div>
+    </div>
+)}
+
         </div>
     );
 };

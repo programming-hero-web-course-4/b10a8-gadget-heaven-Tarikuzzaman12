@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { useLoaderData, useParams, useOutletContext } from 'react-router-dom';
 import Heading from './Heading';
 import { toast } from 'react-toastify';
@@ -7,7 +7,8 @@ import { Helmet } from 'react-helmet-async';
 const ProductDetail = () => {
     const { id } = useParams();
     const data = useLoaderData();
-    const { updateCartCount, updateWishlistCount } = useOutletContext(); // Update this line
+    const { updateCartCount, updateWishlistCount } = useOutletContext();
+    const [isWishlistDisabled, setIsWishlistDisabled] = useState(false);
 
     const product = data.find(item => item.product_id === parseInt(id));
 
@@ -32,23 +33,18 @@ const ProductDetail = () => {
         }
     };
 
-
     const handleAddToWishlist = () => {
         const wishlistItems = JSON.parse(localStorage.getItem('wishlist')) || [];
         if (!wishlistItems.some(item => item.product_id === product.product_id)) {
             wishlistItems.push(product);
-            toast.success('Product added tio the WishList')
+            toast.success('Product added to the Wishlist');
             localStorage.setItem('wishlist', JSON.stringify(wishlistItems));
             updateWishlistCount(wishlistItems.length);
-            setTimeout(() => {
-                window.location.reload();
-            }, 1700);
-        }
-        else {
-            toast.warning("Product already in wishlist!")
+            setIsWishlistDisabled(true);
+        } else {
+            toast.warning("Product already in wishlist!");
         }
     };
-
 
     const { product_title, product_image, price, description, Specification, availability, rating } = product;
 
@@ -85,10 +81,13 @@ const ProductDetail = () => {
                         ))}
                     </ol>
                     <p><span className='font-bold'>Rating: </span>{rating}</p>
-                    <div className="rating block">
-                        {[...Array(5)].map((_, index) => (
-                            <input key={index} type="radio" name="rating" className="mask mask-star-2 bg-[#F9C004]" />
-                        ))}
+                    <div className="rating rating-md">
+                        <input type="radio" name="rating-9" className="rating-hidden" />
+                        <input type="radio" name="rating-9" className="mask mask-star-2 bg-orange-400" />
+                        <input type="radio" name="rating-9" className="mask mask-star-2 bg-orange-400" />
+                        <input type="radio" name="rating-9" className="mask mask-star-2 bg-orange-400" />
+                        <input type="radio" name="rating-9" className="mask mask-star-2 bg-orange-400" defaultChecked />
+                        <input type="radio" name="rating-9" className="mask mask-star-2 bg-orange-400" />
                     </div>
 
                     <div className='flex items-center gap-4'>
@@ -96,7 +95,11 @@ const ProductDetail = () => {
                             Add To Cart <i className="fa-solid fa-cart-shopping ml-2"></i>
                         </button>
                         <p>
-                            <i onClick={handleAddToWishlist} className="fa-regular fa-heart border border-gray-400 rounded-full p-2 cursor-pointer text-black"></i>
+                            <i
+                                onClick={handleAddToWishlist}
+                                className={`fa-regular fa-heart border border-gray-400 rounded-full p-2 cursor-pointer ${isWishlistDisabled ? 'text-gray-400 cursor-not-allowed' : 'text-black'}`}
+                                style={{ pointerEvents: isWishlistDisabled ? 'none' : 'auto' }}
+                            ></i>
                         </p>
                     </div>
                 </div>
