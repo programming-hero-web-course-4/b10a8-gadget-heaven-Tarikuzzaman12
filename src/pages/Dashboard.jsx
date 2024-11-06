@@ -3,7 +3,8 @@ import { toast, ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import Heading from '../components/Heading';
 import { useNavigate } from 'react-router-dom';
-
+import image from '../assets/Group.png'
+import { Helmet } from 'react-helmet-async';
 const Dashboard = () => {
     const [cartItems, setCartItems] = useState([]);
     const [wishlistItems, setWishlistItems] = useState([]);
@@ -64,10 +65,14 @@ const Dashboard = () => {
         setTotalCost(0);
         localStorage.setItem('cart', JSON.stringify([]));
         navigate('/'); // Navigate to home page
+        window.location.reload();
     };
 
     return (
         <div>
+            <Helmet>
+                <title>Gadget Heaven | Dashboard</title>
+            </Helmet>
             <ToastContainer position="top-center" autoClose={2000} hideProgressBar={false} />
 
             <Heading
@@ -171,6 +176,7 @@ const Dashboard = () => {
             {showModal && (
                 <div className="fixed inset-0 flex items-center justify-center z-50 bg-gray-900 bg-opacity-50">
                     <div className="bg-white p-6 rounded-lg shadow-lg w-1/3">
+                    <img  src={image}></img>
                         <h2 className="text-2xl font-bold mb-4">Congratulations!</h2>
                         <p>Your purchase was successful.</p>
                         <button className="btn bg-purple-600 text-white rounded-3xl mt-4" onClick={closeModal}>Close</button>

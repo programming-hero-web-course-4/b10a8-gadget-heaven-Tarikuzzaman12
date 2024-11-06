@@ -12,6 +12,8 @@ import Products from './components/Products';
 import { Outlet } from 'react-router-dom';
 import ProductDetail from './components/ProductDetail';
 import Statictics from './pages/Statictics';
+import AnnouncementBanner from './pages/AnnouncementBanner';
+import { HelmetProvider } from 'react-helmet-async';
 
 const router = createBrowserRouter([
   {
@@ -23,7 +25,7 @@ const router = createBrowserRouter([
         element: <Home />,
         loader: () => fetch('/categories.json'),
         children: [
-        
+
           {
             path: '/',
             element: <Products />,
@@ -50,12 +52,18 @@ const router = createBrowserRouter([
         path: '/statictics',
         element: <Statictics></Statictics>,
       },
+      {
+        path: '/announcementBanner',
+        element: <AnnouncementBanner></AnnouncementBanner>,
+      },
     ],
   },
 ]);
 
 createRoot(document.getElementById('root')).render(
   <StrictMode>
-    <RouterProvider router={router} />
+    <HelmetProvider>
+      <RouterProvider router={router} />
+    </HelmetProvider>
   </StrictMode>
 );

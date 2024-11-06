@@ -2,6 +2,7 @@ import React from 'react';
 import { useLoaderData, useParams, useOutletContext } from 'react-router-dom';
 import Heading from './Heading';
 import { toast } from 'react-toastify';
+import { Helmet } from 'react-helmet-async';
 
 const ProductDetail = () => {
     const { id } = useParams();
@@ -20,9 +21,12 @@ const ProductDetail = () => {
 
         if (!isProductInCart) {
             cartItems.push(product);
+            toast.success("Product added to the cart!");
             localStorage.setItem('cart', JSON.stringify(cartItems));
             updateCartCount(cartItems.length);
-            toast.success("Product added to the cart!");
+            setTimeout(() => {
+                window.location.reload();
+            }, 1700);
         } else {
             toast.warning("Product already in the cart!");
         }
@@ -33,9 +37,12 @@ const ProductDetail = () => {
         const wishlistItems = JSON.parse(localStorage.getItem('wishlist')) || [];
         if (!wishlistItems.some(item => item.product_id === product.product_id)) {
             wishlistItems.push(product);
+            toast.success('Product added tio the WishList')
             localStorage.setItem('wishlist', JSON.stringify(wishlistItems));
             updateWishlistCount(wishlistItems.length);
-            toast('Product added tio the WishList')
+            setTimeout(() => {
+                window.location.reload();
+            }, 1700);
         }
         else {
             toast.warning("Product already in wishlist!")
@@ -47,6 +54,9 @@ const ProductDetail = () => {
 
     return (
         <div>
+            <Helmet>
+                <title>Gadget Heaven | Details of - {product_title}</title>
+            </Helmet>
             <div className='bg-[#9538E2] h-96 relative'>
                 <Heading
                     title="Product Details"
@@ -86,7 +96,7 @@ const ProductDetail = () => {
                             Add To Cart <i className="fa-solid fa-cart-shopping ml-2"></i>
                         </button>
                         <p>
-                            <i onClick={handleAddToWishlist} className="fa-regular fa-heart border border-gray-400 rounded-full p-2 cursor-pointer"></i>
+                            <i onClick={handleAddToWishlist} className="fa-regular fa-heart border border-gray-400 rounded-full p-2 cursor-pointer text-black"></i>
                         </p>
                     </div>
                 </div>
